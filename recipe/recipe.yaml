@@ -1,26 +1,28 @@
-{% set version = "0.4.0" %}
-{% set python_min = "3.11" %}
+schema_version: 1
+
+context:
+  version: "0.4.0"
 
 package:
   name: eoread
-  version: {{ version }}
+  version: ${{ version }}
 
 source:
-  url: https://github.com/hygeos/eoread/archive/refs/tags/v{{ version }}.tar.gz
+  url: https://github.com/hygeos/eoread/archive/refs/tags/v${{ version }}.tar.gz
   sha256: 6f6e6f270a9b7a106ec62da64dd17e3240a525999ccd34f238671b7c16c727ca
 
 build:
-  number: 0
-  script: {{ PYTHON }} -m pip install . -vv
+  number: 1
   noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - python {{ python_min }}
+    - python ${{ python_min }}.*
     - pip
     - poetry-core >=1
   run:
-    - python >={{ python_min }}
+    - python >=${{ python_min }}
     - cdsapi
     - dask  # missing in package requirements (pyproject.toml)
     - eumdac
@@ -35,20 +37,20 @@ requirements:
     - rioxarray
     - xarray  # missing in package requirements (pyproject.toml)
 
-test:
-  imports:
-    - eoread
-  requires:
-    - python {{ python_min }}
-    - pip
-  commands:
-    - pip check
+tests:
+  - python:
+      imports:
+        - eoread
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
 
 about:
-  home: https://github.com/hygeos/eoread
-  summary: "Modular implementation of satellite data input/output relying on xarray."
+  summary: Modular implementation of satellite data input/output relying on xarray.
   license: Apache-2.0
   license_file: LICENSE
+  homepage: https://github.com/hygeos/eoread
 
 extra:
   recipe-maintainers:
