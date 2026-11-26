@@ -1,4 +1,4 @@
-{% set version = "0.4.0" %}
+{% set version = "1.0.0" %}
 {% set python_min = "3.11" %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/hygeos/eoread/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 6f6e6f270a9b7a106ec62da64dd17e3240a525999ccd34f238671b7c16c727ca
+  sha256: e45c5aa6a2b940e2e9d9da8bef72a939b9e9b1bbcd656d71f2ce2960ea25f52e
 
 build:
   number: 0
